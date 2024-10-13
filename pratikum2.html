@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ScrubStyle</title>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+            font-family: sans-serif, sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6, p {
+            text-align: center;
+        }
+        .content {
+            margin: 20px auto;
+            width: 80%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #4F4F4F;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .form-container, .receipt, .rating-section, .products-section, .testimonials-section {
+            background-color: #4F4F4F;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        img {
+            display: block;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgb(66, 70, 71);
+        }
+        .receipt {
+            margin: 20px auto;
+            width: 50%;
+            padding: 20px;
+            border: 2px solid rgb(66, 70, 71);
+            border-radius: 10px;
+            background-color: rgb(66, 70, 71);
+        }
+        .rating-table {
+            margin: 20px auto;
+            width: 50%;
+        }
+        .testimonial-form {
+            margin: 20px auto;
+            width: 70%;
+        }
+        .testimonial-form textarea {
+            width: 100%;
+            height: 100px;
+        }
+        .li-navbar:hover{
+            background-color: rgb(137, 136, 136);
+            transition: 0.2s ease-in-out;
+            transition-delay: .03s;
+            border-radius: 100px;
+        }
+        .li-navbar{
+            list-style-type: none;
+            color:white;
+        }
+        .ul-navbar{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        function navigateTo(page) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.style.display = 'none');
+
+            document.getElementById(page).style.display = 'block';
+        }
+        
+        function calculateTotal() {
+        const prices = {
+            scrub1: 100000,
+            scrub2: 150000,
+            scrub3: 200000
+        };
+    let total = 0;
+
+    const quantity1 = parseInt(document.getElementById("quantity1").value) || 0;
+    const product1 = document.getElementById("product1").value;
+    total += prices[product1] * quantity1;
+
+    const paymentMethod = document.getElementById("paymentMethod")?.value || "Tidak Diketahui";
+
+    document.getElementById("receipt").innerHTML = `
+        <h4>Nota Pembelian</h4>
+        <p>Produk 1: ${document.getElementById("product1").selectedOptions[0].text}</p>
+        <p>Kuantitas Produk 1: ${quantity1}</p>
+        <p>Total Harga: IDR ${total.toLocaleString()}</p>
+        <p>Metode Pembayaran: ${paymentMethod}</p>
+    `;
+    return false; 
+        }
+        function submitRating() {
+            const ratingValue = document.querySelector('input[name="rating"]:checked').value;
+            const ratingTable = document.getElementById("ratingTable");
+            const newRow = ratingTable.insertRow();
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            cell1.textContent = ratingValue + " ★";
+            cell2.textContent = new Date().toLocaleString(); 
+            document.getElementById("ratingForm").reset(); 
+            return false; 
+        }
+        function submitTestimonial() {
+            const ratingValue = document.querySelector('input[name="rating"]:checked').value;
+            const feedback = document.getElementById("feedback").value;
+
+            const testimonialList = document.getElementById("testimonialList");
+            const newTestimonial = document.createElement("div");
+            newTestimonial.innerHTML = `
+                <p><strong>Rating:</strong> ${ratingValue} ★</p>
+                <p><strong>Feedback:</strong> ${feedback}</p>
+                <p><strong>Waktu:</strong> ${new Date().toLocaleString()}</p>
+                <hr>
+            `;
+            testimonialList.appendChild(newTestimonial);
+
+            document.getElementById("testimonialForm").reset(); 
+            return false; 
+        }
+    </script>
+        </head>
+
+        <body>
+
+            <h1 style="background-color:rgb(66, 70, 71); color:rgb(244, 244, 244); font-size: 300%;">ScrubStyle</h1>
+            <p style="color: rgb(66, 70, 71); font-size: 200%;">Premium Medical Clothing for Healthcare Workers</p>
+
+            <nav>
+                <ul class="ul-navbar">
+                    <li class="li-navbar">
+                        <a href="#" onclick="navigateTo('homeSection')">Home</a>
+                    </li>
+                    <li class="li-navbar">   
+                        <a href="#" onclick="navigateTo('productsSection')">Product</a>
+                    </li>
+                    <li class="li-navbar"> 
+                        <a href="#" onclick="navigateTo('testimonialsSection')">Testimonial</a>
+                    </li>
+                </ul>
+            </nav>
+
+            
+            <div id="homeSection" class="section content">
+                <h2 style="background-color:rgb(66, 70, 71); color:rgb(244, 244, 244); font-size: 200%;">About Us</h2>
+                <p style="color: rgb(66, 70, 71); font-size: 130%;">
+                    ScrubStyle is a medical apparel brand that can serve individual or group orders. 
+                    ScrubStyle provides bulk order service that can be customized according to our customers' needs.
+                    ScrubStyle values comfortable and durable, because we want our customers to experience the power of our products.
+                </p>
+                <img src="https://i.pinimg.com/736x/08/07/11/0807115d3f56dfe5a6517e0966dec594.jpg" width="200" height="200">
+                <h3 style="background-color: rgb(66, 70, 71); color: rgb(244, 244, 244); font-size: 200%;">Why Our Clients Trust Us</h3>
+                <p style="color: rgb(66, 70, 71); font-size: 130%;">
+                    ScrubStyle is committed to providing the best service to customers, with friendliness, transparency, and openness in every process. 
+                    in every process. ScrubStyle also has a reliable and experienced production team.
+                </p>
+            
+                <p><img src="https://i.pinimg.com/564x/0c/5f/f2/0c5ff2a789f3239faf3114f9f2ea2584.jpg" width="500" height="300"></p>
+            
+                <h4 style="background-color: rgb(66, 70, 71); color: rgb(244, 244, 244); font-size: 200%;">Get Your Group Order ScrubStyle</h4>
+                <p style="color: rgb(66, 70, 71); font-size: 130%;">
+                    ✅ ScrubStyle's Group Order provides many benefits, such as special discounts.<br>
+                    ✅ Want to order a large group (70+)? Give us a list of members, we'll do the rest.
+                </p>
+
+                <h5 style="background-color: rgb(66, 70, 71); color: rgb(244, 244, 244); font-size: 200%;">Our Product Advantages</h5>
+            <p style="color: rgb(66, 70, 71); font-size: 130%;">
+                ✅ Spesialisasi Group Order<br>
+                ✅ Value comfortable and durable<br>
+                ✅ Guarantee Service Product
+            </p>
+
+            <p><img src="https://i.pinimg.com/564x/76/fe/7f/76fe7febdb15205f18d086f5bf2b2b70.jpg" width="600" height="400"></p>
+            
+            <h6 style="background-color: rgb(66, 70, 71); color: rgb(244, 244, 244); font-size: 200%;">Social Media</h6>
+            <p style="color: rgb(66, 70, 71); font-size: 130%;">
+                <a href="https://www.tiktok.com/@scrubstyle1"class="a-content">
+                    <img src="https://i.pinimg.com/564x/73/fc/c1/73fcc1123c17b1eb525e03668389bc00.jpg" width="80" height="80" class="img-content" />
+                    <p>Visit Us On Tiktok</p>
+                </a>
+
+                <a href="https://id.shp.ee/wqGE3jy"class="a-content">
+                    <img src="https://i.pinimg.com/564x/77/7d/c8/777dc8f47b66af05caff4015d5f416d8.jpg" width="80" height="80" class="img-content" />
+                    <p>Visit Us On Shopee</p>
+                </a>
+                <a href="https://www.instagram.com/scrubstyle.id?"class="a-content">
+                    <img src="https://i.pinimg.com/474x/68/ef/14/68ef14190e26f26ba8a58f17999e55db.jpg" width="80" height="80" class="img-content" />
+                    <p>Visit Us On Instagram</p>
+                </a>
+            </div>
+            
+            <div id="productsSection" class="section content" style="display: none;">
+                <h2>Our Products</h2>
+                <div class="products-section">
+                    <p>We provide various types of quality scrubs.</p>
+                    <img src="https://i.pinimg.com/736x/31/c9/84/31c9845e0791aad118fbed52ee2addb7.jpg" width="700" height="400">
+                    <img src="https://i.pinimg.com/736x/89/57/aa/8957aa6c8a3025ff8e10b143a75142b8.jpg" width="700" height="400">
+                    <img src="https://i.pinimg.com/736x/41/14/1e/41141e0d6077335ac2ceea99c57100f2.jpg" width="700" height="400">
+                    <img src="https://i.pinimg.com/736x/dd/c7/5d/ddc75d7003b4f62d0c51346f2afa50e4.jpg" width="700" height="400">
+                
+                    <h5 style="background-color: rgb(244, 244, 244); color: rgb(66, 70, 71); font-size: 200%;">We'll Give Our Best to Accommodate Your Needs</h5>
+                    <p style="color: rgb(244, 244, 244); font-size: 130%;">
+                        Start Shopping Now! Find a variety of quality products that meet your needs.
+                    </p>
+                
+                    <h6 style="font-size: 130%;">Calculate Your Orders</h6>
+                
+                    <div class="form-container">
+                    <form onsubmit="return calculateTotal();">
+                        <table>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Color Name</th>
+                                <th>Sive Name</th>
+                                <th>Quantity Name</th>
+                                <th>Payment Method</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="product1">Product:</label>
+                                    <select name="product1" id="product1">
+                                        <option value="scrub1">Scrub A - IDR 100,000</option>
+                                        <option value="scrub2">Scrub B - IDR 150,000</option>
+                                        <option value="scrub3">Scrub C - IDR 200,000</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="warna1">Color product:</label>
+                                    <select name="warna1" id="warna1">
+                                        <option value="blue">Blue</option>
+                                        <option value="green">Green</option>
+                                        <option value="red">Red</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="size1">Size product:</label>
+                                    <select name="size1" id="size1">
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="quantity1">Quantity product:</label>
+                                    <input type="number" id="quantity1" min="0" value="0">
+                                </td>
+                                <td>
+                                    <label for="paymentMethod">Payment Method:</label>
+                                    <select id="paymentMethod">
+                                    <option value="cash">E Wallet</option>
+                                    <option value="credit">Credit Card</option>
+                                    <option value="transfer">Bank Transfer</option>
+                                </select>
+                            </tr>
+                        </table>
+                        <input type="submit" value="Add Product">
+                    </form>
+                </div>
+                
+                    <div class="receipt" id="receipt"></div>
+                
+                </div>
+            </div>
+            
+            <div id="testimonialsSection" class="section content" style="display: none;">
+                <h2>Customer Testimonials</h2>
+                <div class="testimonials-section">
+                    <h3>Customer Reviews</h3>
+                    <div id="testimonialList">
+                        
+                        <p>"ScrubStyle sangat nyaman dipakai dan kualitasnya luar biasa!" - dr Nadiah Amani</p>
+                        <p>"Harga sesuai kualitas. Sangat direkomendasikan!" - dr Luthfi Abdurrahman</p>
+                        <hr>
+                    </div>
+
+                    <h3>Give Your Ratings and Testimonials</h3>
+                    <form id="testimonialForm" class="testimonial-form" onsubmit="return submitTestimonial();">
+                        <label for="rating">Your Rating:</label><br>
+                        <input type="radio" name="rating" value="1"> 1 ★
+                        <input type="radio" name="rating" value="2"> 2 ★
+                        <input type="radio" name="rating" value="3"> 3 ★
+                        <input type="radio" name="rating" value="4"> 4 ★
+                        <input type="radio" name="rating" value="5" checked> 5 ★
+                        <br><br>
+
+                        <label for="feedback">feedback:</label><br>
+                        <textarea id="feedback" name="feedback" placeholder="Write your review or complaint here"></textarea><br><br>
+
+                        <input type="submit" value="submit">
+                    </form>
+                </div>
+            </div>
+
+            <script>
+    
+        navigateTo('homeSection');
+    </script>
+</body>
+</html>
